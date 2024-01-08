@@ -31,15 +31,16 @@ const initPlayers = (players) => {
     detailedPlayers = players.map((name,i)=>{
         let type;
         if(i%2!=0){
-            type == "villian";
+            type = "villian";
         }
         else{
-            type == "hero";
+            type = "hero";
         }
         return{
             name: name,
             strength: getRandomStrength(),
             type: type,
+            image: `./images/super-${i+1}.png`
         }
     })
 
@@ -52,28 +53,46 @@ const getRandomStrength = () => {
 }
 
 // Build player template
+// const buildPlayers = (players, type) => {
+//     let fragment = '';
+
+//     // Instead of using for loop
+//     // Use chaining of Array methods - filter, map and join
+//     // Type your code here
+
+//     let checkForType = players.filter((div)=>{
+//         div.type == type
+//     })
+
+//         checkForType.map((player)=>{
+//             fragment.innerHTML +=`<div class="player">
+//             <img src="${player[i].image}">
+//             <div class="name">${player[i].name}</div>
+//             <div class="strength">${player [i].strength}</div>
+//             </div>` 
+//         })
+//     // fragment = data.join("")
+//     console.log(fragment)
+
+//     return fragment;
+// }
+
 const buildPlayers = (players, type) => {
     let fragment = '';
 
-    // Instead of using for loop
-    // Use chaining of Array methods - filter, map and join
-    // Type your code here
+    let checkForType = players.filter((player) => player.type === type);
 
-    let checkForType = players.filter((div)=>{
-        div.type == type
-
-        let data = checkForType.map((player)=>{
-            return `<div class="player">
-            <img src="${player[i].image}">
-            <div class="name">${player[i].name}</div>
-            <div class="strength">${player [i].strength}</div>
-         </div>`
-        })
-    })
-    fragment = data.join("")
+    checkForType.forEach((player) => {
+        fragment += `<div class="player">
+            <img src="${player.image}" alt="">
+            <div class="name">${player.name}</div>
+            <div class="strength">${player.strength}</div>
+        </div>`;
+    });
 
     return fragment;
 }
+
 
 // Display players in HTML
 const viewPlayers = (players) => {
@@ -81,7 +100,6 @@ const viewPlayers = (players) => {
     document.getElementById('villains').innerHTML = buildPlayers(players, 'villain');
 }
 
-
-window.onload = () => {
-    viewPlayers(initPlayers(PLAYERS));
+window.onload=()=>{
+    viewPlayers(initPlayers(PLAYERS))
 }
